@@ -1,8 +1,19 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Noto_Sans, Titillium_Web } from "next/font/google";
 import "./globals.css";
+import {CommandBar} from "@/components/ui/CommandBar/CommandBar";
 
-const inter = Inter({ subsets: ["latin"] });
+const titilliumWeb = Titillium_Web({
+  subsets: ["latin"],
+  weight: ["300"],
+  display: "swap",
+  variable: "--font-titillium",
+});
+const notoSans = Noto_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-noto",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +27,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${titilliumWeb.variable} ${notoSans.variable}`}>
+        {children}
+        <CommandBar />  
+      </body>
     </html>
   );
 }

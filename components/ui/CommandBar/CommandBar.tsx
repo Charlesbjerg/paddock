@@ -11,10 +11,18 @@ import {
     CommandSeparator,
     CommandShortcut,
   } from "@/components/ui/command"
+import { useRouter } from 'next/navigation';
   
   export function CommandBar() {
     const [open, setOpen] = React.useState(false)
   
+    const router = useRouter();
+
+    const runCommand = React.useCallback((command: () => unknown) => {
+      setOpen(false)
+      command()
+    }, [])
+
     React.useEffect(() => {
       const down = (e: KeyboardEvent) => {
         if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
@@ -32,9 +40,19 @@ import {
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Suggestions">
-            <CommandItem>Calendar</CommandItem>
-            <CommandItem>Search Emoji</CommandItem>
-            <CommandItem>Calculator</CommandItem>
+            <CommandItem onSelect={() => {
+              runCommand(() => {
+                router.push('/circuits')
+              });
+            }}>Circuits</CommandItem>
+            <CommandItem onSelect={() => {
+              runCommand(() => {
+                router.push('/drivers')
+              });
+            }}>Drivers</CommandItem>
+            <CommandItem>Constructors</CommandItem>
+            <CommandItem>Races</CommandItem>
+            <CommandItem>Seasons</CommandItem>
           </CommandGroup>
         </CommandList>
       </CommandDialog>

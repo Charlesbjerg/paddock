@@ -221,3 +221,10 @@ export const resultsRelations = relations(results, ({ one }) => ({
 //     references: [races.id],
 //   }),
 // }));
+
+
+export const cache = mysqlTable("cache", {
+  id: int("id").primaryKey().autoincrement(),
+  key: varchar("key", { length: 256 }),
+  value: varchar("value", { length: 256 }),
+});

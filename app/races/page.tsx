@@ -18,7 +18,7 @@ export default async function Page() {
             <article key={race.id} className="p-4 rounded shadow">
                 <h2>{race.year} {race.name}</h2>
                 <p>{race.circuit?.location}: {race.circuit?.name}</p>
-                <Link href={`/races/${race.year}-${race.round}`}>
+                <Link href={`/races/${race.id}`}>
                     <Button>View</Button>
                 </Link>
             </article>

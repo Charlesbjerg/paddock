@@ -20,8 +20,12 @@ export default async function Home() {
         <Link href="/drivers">
           <Button>Drivers</Button>
         </Link>
-        <Button>Constructors</Button>
-        <Button>Races</Button>
+        <Link href="/constructors">
+          <Button>Constructors</Button>
+        </Link>
+        <Link href="/races">
+          <Button>Races</Button>
+        </Link>
       </div>
     </main>
   );

@@ -1,3 +1,4 @@
+import { table } from "console";
 import { relations } from "drizzle-orm";
 import {
   int,
@@ -6,6 +7,7 @@ import {
   text,
   date,
   time,
+  primaryKey,
 } from "drizzle-orm/mysql-core";
 
 export const circuits = mysqlTable("circuits", {
@@ -138,17 +140,20 @@ export const driverStandings = mysqlTable("driver_standings", {
 });
 
 export const lapTimes = mysqlTable("lap_times", {
-  id: int("id").primaryKey(),
   raceId: int("raceId"),
   driverId: int("driverId"),
   lap: int("lap"),
   position: int("position"),
   time: varchar("time", { length: 256 }),
   milliseconds: int("milliseconds"),
+}, (table) => {
+  return {
+    pk: primaryKey({ columns: [table.raceId, table.driverId, table.lap] })
+  }
 });
+export type SelectLapTimes = typeof lapTimes.$inferSelect;
 
 export const pitStops = mysqlTable("pit_stops", {
-  id: int("id").primaryKey(),
   raceId: int("raceId"),
   driverId: int("driverId"),
   stop: int("stop"),
@@ -156,7 +161,12 @@ export const pitStops = mysqlTable("pit_stops", {
   time: varchar("time", { length: 256 }),
   duration: varchar("duration", { length: 256 }),
   milliseconds: int("milliseconds"),
+}, (table) => {
+  return {
+    pk: primaryKey({ columns: [table.raceId, table.driverId, table.stop] })
+  }
 });
+export type SelectPitStops = typeof pitStops.$inferSelect;
 
 export const sprintResults = mysqlTable("sprint_results", {
   id: int("id").primaryKey(),
@@ -177,6 +187,12 @@ export const sprintResults = mysqlTable("sprint_results", {
   statusId: int("statusId"),
 });
 
+export const cache = mysqlTable("cache", {
+  id: int("id").primaryKey().autoincrement(),
+  key: varchar("key", { length: 256 }),
+  value: varchar("value", { length: 256 }),
+});
+
 /*
   Relationships
 */
@@ -190,7 +206,32 @@ export const racesRelations = relations(races, ({ one, many }) => ({
     references: [circuits.id],
   }),
   results: many(results),
+  lapTimes: many(lapTimes),
+  pitStops: many(pitStops),
 }));
+
+export const lapTimesRelations = relations(lapTimes, ({ one }) => ({
+  driver: one(drivers, {
+    fields: [lapTimes.driverId],
+    references: [drivers.id],
+  }),
+  race: one(races, {
+    fields: [lapTimes.raceId],
+    references: [races.id],
+  })
+}));
+
+export const pitStopsRelations = relations(pitStops, ({ one }) => ({
+  driver: one(drivers, {
+    fields: [pitStops.driverId],
+    references: [drivers.id],
+  }),
+  race: one(races, {
+    fields: [pitStops.raceId],
+    references: [races.id],
+  })
+}));
+
 
 export const driverRelations = relations(drivers, ({ many }) => ({
   results: many(results),
@@ -222,9 +263,3 @@ export const resultsRelations = relations(results, ({ one }) => ({
 //   }),
 // }));
 
-
-export const cache = mysqlTable("cache", {
-  id: int("id").primaryKey().autoincrement(),
-  key: varchar("key", { length: 256 }),
-  value: varchar("value", { length: 256 }),
-});

@@ -1,5 +1,4 @@
 import { db } from "@/db/db";
-import { drivers, races } from "@/db/schema";
 import { notFound } from "next/navigation";
 import {
   Table,
@@ -10,7 +9,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { asc, desc } from "drizzle-orm";
 import Link from "next/link";
 import { ArrowLongLeftIcon } from "@heroicons/react/24/solid";
 
@@ -18,11 +16,7 @@ export default async function Page({ params }: { params: { ref: string } }) {
   const driver = await db.query.drivers.findFirst({
     where: (drivers, { eq }) => eq(drivers.driverRef, params.ref),
     with: {
-      results: {
-        with: {
-          race: true,
-        },
-      },
+      results: true
     },
   });
 
@@ -58,8 +52,8 @@ export default async function Page({ params }: { params: { ref: string } }) {
         <TableBody>
           {driver.results.map((result) => (
             <TableRow key={result.id}>
-              <TableCell>{result.race.year}</TableCell>
-              <TableCell>{result.race.name}</TableCell>
+              {/* <TableCell>{result.race.year}</TableCell> */}
+              {/* <TableCell>{result.race.name}</TableCell> */}
               <TableCell>{result.time}</TableCell>
               <TableCell>{result.grid}</TableCell>
               <TableCell>{result.position}</TableCell>

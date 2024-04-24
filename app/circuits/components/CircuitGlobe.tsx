@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 export default function CircuitGlobe({
   circuits,
 }: {
-  circuits: Array<SelectCircuit>;
+  circuits: any;
 }) {
   const router = useRouter();
 
@@ -19,7 +19,7 @@ export default function CircuitGlobe({
     </svg>`;
 
   const circuitsWithPositions = useMemo(() => {
-    return circuits.map((circuit) => {
+    return circuits.map((circuit: SelectCircuit) => {
       return {
         ...circuit,
         size: 20,
@@ -28,22 +28,18 @@ export default function CircuitGlobe({
     });
   }, [circuits]);
 
-  const [activeCircuit, setActivePin] = useState<SelectCircuit | null>(null);
-
-  useEffect(() => {
-    console.log(`Active pin changed to ${activeCircuit}`);
-  }, [activeCircuit]);
-
+  const [activeCircuit, setActivePin] = useState<any | null>(null);
   const globeColumn = useRef<HTMLDivElement>(null);
 
   return (
     <div className="grid grid-cols-4">
       <div className="col-span-3" ref={globeColumn}>
-        {window && (
+        {typeof window !== "undefined" && (
           <Globe
             showGraticules
-            width={globeColumn?.current?.clientWidth ?? 500}
-            globeImageUrl="//unpkg.com/three-globe/example/img/earth-dark.jpg"
+            width={globeColumn?.current?.clientWidth ?? 1000}
+            // globeImageUrl="//unpkg.com/three-globe/example/img/earth-dark.jpg"
+            globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
             htmlElementsData={circuitsWithPositions}
             htmlElement={(circuit: any) => {
               const el = document.createElement("div");

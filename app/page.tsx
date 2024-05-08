@@ -1,31 +1,29 @@
 import { db } from "@/db/db";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import Image from "next/image";
+import LightsOutBtn from "@/components/ui/LightsOutBtn";
 
 export default async function Home() {
   const data = await db.query.circuits.findMany();
 
   return (
-    <main className="flex h-screen w-screen flex-col items-center justify-center bg-black text-white">
-      <h1 className="mb-6 text-center font-sans text-5xl font-black uppercase tracking-wider">
-        The Paddock
-      </h1>
-      <p className="font-noto mb-10">
-        Home to a collection of historical F1 data.
-      </p>
-      <div className="mx-auto flex w-full max-w-lg flex-wrap gap-4 rounded bg-white p-4">
-        <Button>
-          <Link href="/circuits">Circuits</Link>
-        </Button>
-        <Link href="/drivers">
-          <Button>Drivers</Button>
-        </Link>
-        <Link href="/constructors">
-          <Button>Constructors</Button>
-        </Link>
-        <Link href="/races">
-          <Button>Races</Button>
-        </Link>
+    <main className="flex h-screen w-screen items-end">
+      <div className="flex mx-auto mb-40 px-8 lg:px-20">
+        <section className="flex-1">
+          <h1 className="text-[8.25rem] font-medium mb-6">
+            Paddock.
+          </h1>
+          <p className="text-4xl mb-2">Don{`'`}t just watch F1, analyse it.</p>
+          <p className="text-4xl mb-10">The data playground for F1 fanatics.</p>
+          <LightsOutBtn>Are you ready?</LightsOutBtn>
+        </section>
+        <figure className="w-1/3">
+          <Image src="/hero-asset.jpg" 
+                 width={800} 
+                 height={800} 
+                 className="rounded-2xl shadow-neon"
+                 alt="A pink and blue neon lit formula 1 car with a chequred flag" />
+        </figure>
       </div>
     </main>
   );

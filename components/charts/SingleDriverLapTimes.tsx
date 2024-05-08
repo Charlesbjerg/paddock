@@ -25,7 +25,7 @@ import {
     TimeSeriesScale,
   )
 
-export default function SingleDriverLapTimes({ lapTimes }) {
+export default function SingleDriverLapTimes({ lapTimes }: {lapTimes: any[]}) {
   return (
     <Line
                                         options={{

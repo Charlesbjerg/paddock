@@ -34,19 +34,19 @@ const rawDir = resolve(__dirname, "../../raw-data");
 */
 async function importData(): Promise<void> {
   const files: string[] = [
-    // "circuits.csv",
-    // "constructors.csv",
-    // "drivers.csv",
-    // "races.csv",
-    // "qualifying_results.csv",
-    // "status.csv",
-    // "results.csv",
-    // "constructor_results.csv",
-    // "constructor_standings.csv",
-    // "driver_standings.csv",
+    "circuits.csv",
+    "constructors.csv",
+    "drivers.csv",
+    "races.csv",
+    "qualifying_results.csv",
+    "status.csv",
+    "results.csv",
+    "constructor_results.csv",
+    "constructor_standings.csv",
+    "driver_standings.csv",
     "pit_stops.csv",
-    // "seasons.csv",
-    // "sprint_results.csv",
+    "seasons.csv",
+    "sprint_results.csv",
     "lap_times.csv",
   ];
 

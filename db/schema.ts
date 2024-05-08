@@ -20,6 +20,7 @@ export const circuits = mysqlTable("circuits", {
   lng: varchar("lng", { length: 256 }),
   alt: varchar("alt", { length: 256 }),
   url: text("url"),
+  countryCode: varchar("countryCode", { length: 2 }),
 });
 export type SelectCircuit = typeof circuits.$inferSelect;
 export type NewCircuit = typeof circuits.$inferSelect;
@@ -44,6 +45,7 @@ export const races = mysqlTable("races", {
   sprint_date: date("sprint_date"),
   sprint_time: time("sprint_time"),
 });
+export type SelectRace = typeof races.$inferSelect;
 
 export const constructors = mysqlTable("constructors", {
   id: int("id").primaryKey(),
@@ -208,6 +210,7 @@ export const racesRelations = relations(races, ({ one, many }) => ({
   results: many(results),
   lapTimes: many(lapTimes),
   pitStops: many(pitStops),
+  qualifyingResults: many(qualifyingResults),
 }));
 
 export const lapTimesRelations = relations(lapTimes, ({ one }) => ({
@@ -232,7 +235,6 @@ export const pitStopsRelations = relations(pitStops, ({ one }) => ({
   })
 }));
 
-
 export const driverRelations = relations(drivers, ({ many }) => ({
   results: many(results),
 }));
@@ -256,10 +258,28 @@ export const resultsRelations = relations(results, ({ one }) => ({
   }),
 }));
 
-// export const qualiRelations = relations(qualifyingResults, ({ one }) => ({
-//   races: one(races, {
-//     fields: [qualifyingResults.raceId],
-//     references: [races.id],
-//   }),
-// }));
+export const qualiRelations = relations(qualifyingResults, ({ one }) => ({
+  races: one(races, {
+    fields: [qualifyingResults.raceId],
+    references: [races.id],
+  }),
+  driver: one(drivers, {
+    fields: [qualifyingResults.driverId],
+    references: [drivers.id],
+  }),
+  constructor: one(constructors, {
+    fields: [qualifyingResults.constructorId],
+    references: [constructors.id],
+  }),
+}));
 
+export const constructorRelations = relations(constructors, ({ many }) => ({
+  results: many(constructorResults),
+}));
+
+export const constructorResultsRelations = relations(constructorResults, ({ one }) => ({
+  constructor: one(constructors, {
+    fields: [constructorResults.constructorId],
+    references: [constructors.id],
+  })
+}));

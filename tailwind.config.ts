@@ -11,7 +11,7 @@ const config = {
   prefix: "",
   theme: {
     fontFamily: {
-      sans: ["var(--font-titillium)"],
+      sans: ["var(--font-satoshi)"],
       noto: ["var(--font-noto)"],
     },
     container: {
@@ -76,6 +76,9 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      boxShadow: {
+        neon: '-10px 2px 20px -0px rgba(4,181,225, 0.55),10px -4px 20px 0px rgba(253,91,200,0.4)'
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],

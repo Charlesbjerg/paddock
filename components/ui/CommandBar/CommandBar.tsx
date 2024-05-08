@@ -50,9 +50,38 @@ import { useRouter } from 'next/navigation';
                 router.push('/drivers')
               });
             }}>Drivers</CommandItem>
-            <CommandItem>Constructors</CommandItem>
-            <CommandItem>Races</CommandItem>
-            <CommandItem>Seasons</CommandItem>
+            <CommandItem onSelect={() => {
+              runCommand(() => {
+                router.push('/constructors')
+              });
+            }}>Constructors</CommandItem>
+            <CommandItem onSelect={() => {
+              runCommand(() => {
+                router.push('/races')
+              });
+            }}>Races</CommandItem>
+            <CommandItem onSelect={() => {
+              runCommand(() => {
+                router.push('/seasons')
+              });
+            }}>Seasons</CommandItem>
+          </CommandGroup>
+          <CommandGroup heading="Seasons">
+            <CommandItem onSelect={() => {
+              runCommand(() => {
+                router.push('/seasons/2021')
+              });
+            }}>2021</CommandItem>
+            <CommandItem onSelect={() => {
+              runCommand(() => {
+                router.push('/seasons/2020')
+              });
+            }}>2020</CommandItem>
+            <CommandItem onSelect={() => {
+              runCommand(() => {
+                router.push('/seasons/2019')
+              });
+            }}>2019</CommandItem>
           </CommandGroup>
         </CommandList>
       </CommandDialog>

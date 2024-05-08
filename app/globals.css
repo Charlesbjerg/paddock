@@ -2,22 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    @apply font-sans;
-}
-
-p,
-a,
-li,
-button,
-th,
-td {
-    @apply font-noto;
+body {
+    @apply font-sans tracking-tighter;
 }
 
 @layer base {

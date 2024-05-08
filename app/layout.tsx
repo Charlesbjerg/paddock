@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Noto_Sans, Titillium_Web } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import {CommandBar} from "@/components/ui/CommandBar/CommandBar";
+import Header from "@/components/common/Header";
 
 const titilliumWeb = Titillium_Web({
   subsets: ["latin"],
@@ -13,6 +15,11 @@ const notoSans = Noto_Sans({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-noto",
+});
+const satoshi = localFont({
+  src: "./fonts/Satoshi-Variable.woff2",
+  display: "swap",
+  variable: "--font-satoshi",
 });
 
 export const metadata: Metadata = {
@@ -27,7 +34,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${titilliumWeb.variable} ${notoSans.variable}`}>
+      <body className={`mt-20 bg-gray-950 text-white ${satoshi.variable} ${notoSans.variable}`}>
+        <Header />
         {children}
         <CommandBar />  
       </body>

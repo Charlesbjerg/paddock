@@ -29,21 +29,20 @@ export default function DriverResultsDialog({ driver, results, pitStops }: Resul
                                     <AccordionTrigger>Lap Times</AccordionTrigger>
                                     <AccordionContent>
                                         <SingleDriverLapTimes lapTimes={results} />
-                                        {/* {results.map((result, index) => (
-                                            <article key={index} className='flex items-center gap-x-4 flex-wrap'>
-                                                <p>P{result.position}</p>
-                                                <p>Lap {result.lap}</p>
-                                                <p>{result.time}</p>
-                                            </article>
-                                        ))} */}
                                     </AccordionContent>
                                 </AccordionItem>
                                 <AccordionItem value="pit-stops">
                                     <AccordionTrigger>Pit Stops</AccordionTrigger>
                                     <AccordionContent>
+                                        <div className='flex items-start gap-x-4'>
                                         {pitStops.map((pitStop, index) => (
-                                            <pre key={index}>{JSON.stringify(pitStop, null, 4)}</pre>
+                                            <div key={index} className='p-4 rounded border border-gray-800'>
+                                                <p>{pitStop.stop}</p>
+                                                <p>Lap {pitStop.lap}</p>
+                                                <p>{pitStop.duration}</p>
+                                            </div>
                                         ))}
+                                        </div>
                                     </AccordionContent>
                                 </AccordionItem>
                             </Accordion>

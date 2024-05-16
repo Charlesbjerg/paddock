@@ -34,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`mt-20 bg-gray-950 text-white ${satoshi.variable} ${notoSans.variable}`}>
+      <body className={`bg-gray-950 text-white ${satoshi.variable} ${notoSans.variable}`}>
         <Header />
         {children}
         <CommandBar />  

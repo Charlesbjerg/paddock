@@ -7,7 +7,7 @@ export default async function Home() {
   const data = await db.query.circuits.findMany();
 
   return (
-    <main className="flex h-screen w-screen items-end">
+    <main className="flex h-screen w-screen items-end fun-gradient">
       <div className="flex mx-auto mb-40 px-8 lg:px-20">
         <section className="flex-1">
           <h1 className="text-[8.25rem] font-medium mb-6">

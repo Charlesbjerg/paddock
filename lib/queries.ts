@@ -5,7 +5,6 @@
 import { db } from "@/db/db";
 import { SelectCircuit, SelectRace } from "@/db/schema";
 import { sql } from "drizzle-orm";
-import { MySqlRawQueryResult } from "drizzle-orm/mysql2";
 
 type SeasonRaceMiniResult = SelectCircuit & SelectRace & {
     id: number;

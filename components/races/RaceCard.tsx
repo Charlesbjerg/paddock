@@ -1,6 +1,7 @@
 import { SelectRace } from "@/db/schema";
 import clsx from "clsx";
 import Flag from "react-world-flags";
+import Link from "next/link";
 
 type RaceMiniResults = {
   p1: string;
@@ -14,7 +15,7 @@ type RaceMiniResults = {
 
 export default function RaceCard({ race, circuit, circuitFlag, results }: { race: SelectRace, circuit: string, circuitFlag: string, results: RaceMiniResults}) {
   return (
-    <article className="px-4 py-6 bg-white text-black rounded-lg shadow-lg shadow-transparent transition-all hover:shadow-white/30 hover:opacity-90 hover:-translate-y-1">
+    <Link href={`/races/${race.id}`} className="px-4 py-6 bg-white text-black rounded-lg shadow-lg shadow-transparent transition-all hover:shadow-white/30 hover:opacity-90 hover:-translate-y-1">
       <header className="flex items-center justify-between mb-4">
         <p>Round {race.round}</p>
         <div className="w-12 h-8 rounded border border-black">
@@ -34,7 +35,7 @@ export default function RaceCard({ race, circuit, circuitFlag, results }: { race
         <PodiumStep key={3} driver={results.p3} position="p3" />
         <FastestLap driver={results.fastest.driver} time={results.fastest.time} />
       </div>
-    </article>
+    </Link>
   );
 }
 

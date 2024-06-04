@@ -6,25 +6,30 @@ import { db } from "@/db/db";
 import { SelectCircuit, SelectRace } from "@/db/schema";
 import { sql } from "drizzle-orm";
 
-type SeasonRaceMiniResult = SelectCircuit & SelectRace & {
-    id: number;
-    circuit: string;
-    countryCode: string;
-    round: number;
-    name: string;
-    year: number;
-    time: string;
-    date: Date;
-    p1: string;
-    p2: string;
-    p3: string;
-    fastestLap: string;
-    fastestLapDriver: string;
-}
+type SeasonRaceMiniResult = SelectCircuit &
+	SelectRace & {
+		id: number;
+		raceId: string;
+		circuit: string;
+		countryCode: string;
+		round: number;
+		name: string;
+		year: number;
+		time: string;
+		date: Date;
+		p1: string;
+		p2: string;
+		p3: string;
+		fastestLap: string;
+		fastestLapDriver: string;
+	};
 
-export async function getSeasonRaceResults(year: number | string): Promise<SeasonRaceMiniResult[]> {
-    const [resultsFound]: any = await db.execute(sql`
+export async function getSeasonRaceResults(
+	year: number | string,
+): Promise<SeasonRaceMiniResult[]> {
+	const [resultsFound]: any = await db.execute(sql`
         select
+            races.id as raceId,
             races.*,
             circuits.*,
             (select drivers.code from results left join drivers on drivers.id = results.driverId where results.raceId = races.id and results.position = 1 limit 1) as p1,
@@ -42,23 +47,23 @@ export async function getSeasonRaceResults(year: number | string): Promise<Seaso
             races.round asc
     `);
 
-    // Map into results array to apply correct type
-    let results: SeasonRaceMiniResult[] = resultsFound.map((row: any) => ({
-        id: row.id,
-        circuit: row.circuitName,
-        countryCode: row.countryCode,
-        round: row.round,
-        name: row.name,
-        year: row.year,
-        time: row.time,
-        date: row.date,
-        p1: row.p1,
-        p2: row.p2,
-        p3: row.p3,
-        fastestLap: row.fastestLap,
-        fastestLapDriver: row.fastestLapDriver,
-    }));
+	// Map into results array to apply correct type
+	let results: SeasonRaceMiniResult[] = resultsFound.map((row: any) => ({
+		id: row.id,
+		raceId: row.raceId,
+		circuit: row.circuitName,
+		countryCode: row.countryCode,
+		round: row.round,
+		name: row.name,
+		year: row.year,
+		time: row.time,
+		date: row.date,
+		p1: row.p1,
+		p2: row.p2,
+		p3: row.p3,
+		fastestLap: row.fastestLap,
+		fastestLapDriver: row.fastestLapDriver,
+	}));
 
-    return results;
-
+	return results;
 }

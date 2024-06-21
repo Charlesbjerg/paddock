@@ -1,13 +1,12 @@
-import { drizzle } from "drizzle-orm/mysql2";
-import mysql from "mysql2";
 import * as schema from "./schema";
+import { drizzle } from "drizzle-orm/libsql";
+import { createClient } from "@libsql/client";
 
-export const connection = mysql.createConnection({
-  host: process.env.DB_HOST ?? "127.0.0.1",
-  user: process.env.DB_USER ?? "root",
-  password: process.env.DB_PASSWORD ?? "",
-  database: process.env.DB_NAME ?? "paddock",
-  multipleStatements: true,
+const client = createClient({
+	url: "file:./db/db.sqlite",
+	// url: "libsql://paddock-db-charlesbjerg.turso.io",
+	// authToken:
+	// "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3MTc1MDE4OTcsImlkIjoiYzViZGE2M2ItYTA3MS00MzU4LThmNjMtMTUyYTg2NWNhOTAxIn0.-VVtOBBvyCZY2_dNgUuYd5mHcwVLzA_-96EXnpD6m-lkFX7ni6kTHA_YfIzAzmPAH7lAF2S3ICAWzGfH9k22Bg",
 });
 
-export const db = drizzle(connection, { mode: "default", schema });
+export const db = drizzle(client, { schema });
